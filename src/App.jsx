@@ -147,7 +147,11 @@ function PostPage() {
       return;
     }
 
-    window.open(post.resource_link, '_blank', 'noopener,noreferrer');
+    triggerAdsterraPopunder();
+
+    window.setTimeout(() => {
+      window.open(post.resource_link, '_blank', 'noopener,noreferrer');
+    }, 800);
   };
 
   const allStepsComplete = completedSteps.like && completedSteps.comment;
