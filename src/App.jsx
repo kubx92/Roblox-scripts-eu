@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link, Navigate, Route, Routes, useParams } from 'react-router-dom';
 import { supabase } from './lib/supabase';
-import Adsterra from './Adsterra';
 
 function HomePage() {
   const [search, setSearch] = useState('');
@@ -68,11 +67,9 @@ function HomePage() {
             <div className="card-content">
               <h2>{post.title || 'Untitled post'}</h2>
               <p>{post.description || 'No description provided.'}</p>
-              <Link
-                className="primary-button"
-                to={`/post/${post.id}`}
-              >
-                Get Script
+              <img className="preview-image" src={getCardImage(post)} alt={`${post.title || 'Post'} preview`} />
+              <Link className="primary-button" to={`/post/${post.id}`}>
+                Open Post
               </Link>
             </div>
           </article>
@@ -87,7 +84,6 @@ function PostPage() {
   const [post, setPost] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const [completedSteps, setCompletedSteps] = useState({ like: false, comment: false });
 
   useEffect(() => {
     async function loadPost() {
@@ -120,33 +116,8 @@ function PostPage() {
   const videoId = getYouTubeId(post.youtube_link);
   const embedUrl = `https://www.youtube.com/embed/${videoId}`;
 
-  const handleStepComplete = (step) => {
-    setCompletedSteps((prev) => ({ ...prev, [step]: true }));
-
-    if (post?.youtube_link) {
-      window.open(post.youtube_link, '_blank', 'noopener,noreferrer');
-    }
-  };
-
-  const [showAdsterra, setShowAdsterra] = useState(false);
-
-  const handleUnlockClick = () => {
-    setShowAdsterra(true);
-
-    if (!post?.resource_link) {
-      return;
-    }
-
-    window.setTimeout(() => {
-      window.open(post.resource_link, '_blank', 'noopener,noreferrer');
-    }, 600);
-  };
-
-  const allStepsComplete = completedSteps.like && completedSteps.comment;
-
   return (
     <div className="page-shell post-detail">
-      {showAdsterra && <Adsterra />}
       <Link className="back-link" to="/">
         ← Back to home
       </Link>
@@ -163,45 +134,9 @@ function PostPage() {
           <p className="eyebrow">Featured Resource</p>
           <h1>{post.title || 'Untitled post'}</h1>
           <p>{post.description || 'No description provided.'}</p>
-
-          <div>
-            <p style={{ margin: '0 0 0.5rem', fontWeight: 700 }}>ript</p>
-            <p style={{ margin: '0 0 0.8rem' }}>Complete both steps below to unlock the script.</p>
-
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '0.75rem' }}>
-                <span>Step 1: Like the video</span>
-                <button
-                  className="primary-button"
-                  type="button"
-                  onClick={() => handleStepComplete('like')}
-                >
-                  {completedSteps.like ? 'Completed' : 'Like Video'}
-                </button>
-              </div>
-
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '0.75rem' }}>
-                <span>Step 2: Comment on the video</span>
-                <button
-                  className="primary-button"
-                  type="button"
-                  onClick={() => handleStepComplete('comment')}
-                >
-                  {completedSteps.comment ? 'Completed' : 'Comment'}
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <button
-            className="primary-button large"
-            type="button"
-            onClick={handleUnlockClick}
-            disabled={!allStepsComplete}
-            style={{ opacity: allStepsComplete ? 1 : 0.6, cursor: allStepsComplete ? 'pointer' : 'not-allowed' }}
-          >
-            Unlock Script
-          </button>
+          <a className="primary-button large" href={post.resource_link} target="_blank" rel="noreferrer">
+            Access Resource
+          </a>
         </div>
       </div>
     </div>
