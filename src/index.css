@@ -127,6 +127,29 @@ main { width: 100%; }
   box-shadow: 0 0 0 4px rgba(47, 209, 255, 0.16);
 }
 
+.ad-banner-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.25rem;
+  width: 100%;
+}
+
+.ad-banner-host {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 320px;
+  min-height: 250px;
+  overflow: hidden;
+}
+
+.ad-banner-host iframe {
+  display: block;
+  max-width: 100%;
+  border: 0;
+}
+
 .status-text {
   margin: 1rem 0 0;
   color: #c9d3ff;

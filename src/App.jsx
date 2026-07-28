@@ -24,6 +24,32 @@ function HomePage() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    const host = document.getElementById('adsterra-home-banner');
+    if (!host || host.dataset.loaded === 'true') {
+      return;
+    }
+
+    window.atOptions = {
+      key: '69530984662263758a380aff138cdcd2',
+      format: 'iframe',
+      height: 250,
+      width: 300,
+      params: {},
+    };
+
+    const configScript = document.createElement('script');
+    configScript.textContent = "window.atOptions = { key: '69530984662263758a380aff138cdcd2', format: 'iframe', height: 250, width: 300, params: {} };";
+
+    const invokeScript = document.createElement('script');
+    invokeScript.src = 'https://www.highperformanceformat.com/69530984662263758a380aff138cdcd2/invoke.js';
+    invokeScript.async = true;
+
+    host.appendChild(configScript);
+    host.appendChild(invokeScript);
+    host.dataset.loaded = 'true';
+  }, []);
+
+  useEffect(() => {
     async function loadPosts() {
       try {
         const { data, error } = await supabase.from('posts').select('*').order('created_at', { ascending: false });
@@ -79,6 +105,10 @@ function HomePage() {
           </div>
         </div>
       </header>
+
+      <div className="ad-banner-wrapper">
+        <div id="adsterra-home-banner" className="ad-banner-host" />
+      </div>
 
       {loading && <p className="status-text">Loading posts from Supabase…</p>}
       {error && <p className="status-text error">{error}</p>}
