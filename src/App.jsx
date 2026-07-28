@@ -1,20 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link, Navigate, Route, Routes, useParams } from 'react-router-dom';
 import { supabase } from './lib/supabase';
-
-function triggerAdsterraPopunder() {
-  if (typeof window === 'undefined') {
-    return;
-  }
-
-  const existingScript = document.querySelector('script[src*="effectivecpmnetwork.com"]');
-  if (!existingScript) {
-    const script = document.createElement('script');
-    script.src = 'https://pl30577872.effectivecpmnetwork.com/57/9b/dc/579bdc8b3705d2c7ca6ec16eb4d60dae.js';
-    script.async = true;
-    document.body.appendChild(script);
-  }
-}
+import Adsterra from './Adsterra';
 
 function HomePage() {
   const [search, setSearch] = useState('');
@@ -84,7 +71,7 @@ function HomePage() {
               <Link
                 className="primary-button"
                 to={`/post/${post.id}`}
-                onClick={() => triggerAdsterraPopunder()}
+                onClick={() => {}}
               >
                 Get Script
               </Link>
@@ -142,8 +129,10 @@ function PostPage() {
     }
   };
 
+  const [showAdsterra, setShowAdsterra] = useState(false);
+
   const handleUnlockClick = () => {
-    triggerAdsterraPopunder();
+    setShowAdsterra(true);
 
     if (!post?.resource_link) {
       return;
@@ -158,6 +147,7 @@ function PostPage() {
 
   return (
     <div className="page-shell post-detail">
+      {showAdsterra && <Adsterra />}
       <Link className="back-link" to="/">
         ← Back to home
       </Link>
