@@ -2,6 +2,20 @@ import { useEffect, useMemo, useState } from 'react';
 import { Link, Navigate, Route, Routes, useParams } from 'react-router-dom';
 import { supabase } from './lib/supabase';
 
+function triggerAdsterraPopunder() {
+  if (typeof window === 'undefined') {
+    return;
+  }
+
+  const existingScript = document.querySelector('script[src*="effectivecpmnetwork.com"]');
+  if (!existingScript) {
+    const script = document.createElement('script');
+    script.src = 'https://pl30577872.effectivecpmnetwork.com/57/9b/dc/579bdc8b3705d2c7ca6ec16eb4d60dae.js';
+    script.async = true;
+    document.body.appendChild(script);
+  }
+}
+
 function HomePage() {
   const [search, setSearch] = useState('');
   const [posts, setPosts] = useState([]);
@@ -67,7 +81,11 @@ function HomePage() {
             <div className="card-content">
               <h2>{post.title || 'Untitled post'}</h2>
               <p>{post.description || 'No description provided.'}</p>
-              <Link className="primary-button" to={`/post/${post.id}`}>
+              <Link
+                className="primary-button"
+                to={`/post/${post.id}`}
+                onClick={() => triggerAdsterraPopunder()}
+              >
                 Get Script
               </Link>
             </div>
