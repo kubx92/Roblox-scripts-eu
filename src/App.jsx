@@ -71,7 +71,6 @@ function HomePage() {
               <Link
                 className="primary-button"
                 to={`/post/${post.id}`}
-                onClick={() => {}}
               >
                 Get Script
               </Link>
@@ -166,7 +165,7 @@ function PostPage() {
           <p>{post.description || 'No description provided.'}</p>
 
           <div>
-            <p style={{ margin: '0 0 0.5rem', fontWeight: 700 }}>Unlock Script</p>
+            <p style={{ margin: '0 0 0.5rem', fontWeight: 700 }}>ript</p>
             <p style={{ margin: '0 0 0.8rem' }}>Complete both steps below to unlock the script.</p>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
