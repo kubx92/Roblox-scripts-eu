@@ -140,11 +140,15 @@ function PostPage() {
   };
 
   const handleUnlockClick = () => {
+    triggerAdsterraPopunder();
+
     if (!post?.resource_link) {
       return;
     }
 
-    window.open(post.resource_link, '_blank', 'noopener,noreferrer');
+    window.setTimeout(() => {
+      window.open(post.resource_link, '_blank', 'noopener,noreferrer');
+    }, 400);
   };
 
   const allStepsComplete = completedSteps.like && completedSteps.comment;
@@ -200,10 +204,7 @@ function PostPage() {
           <button
             className="primary-button large"
             type="button"
-            onClick={() => {
-              handleUnlockClick();
-              triggerAdsterraPopunder();
-            }}
+            onClick={handleUnlockClick}
             disabled={!allStepsComplete}
             style={{ opacity: allStepsComplete ? 1 : 0.6, cursor: allStepsComplete ? 'pointer' : 'not-allowed' }}
           >
