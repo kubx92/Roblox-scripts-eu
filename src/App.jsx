@@ -95,6 +95,9 @@ function HomePage() {
           <p className="hero-copy">
             Discover polished gameplay tools, premium scripts, and curated resources in a sleek platform built for modern creators and players.
           </p>
+          <div className="ad-banner-wrapper">
+            <div id="adsterra-home-banner" className="ad-banner-host" />
+          </div>
           <div className="search-box">
             <input
               type="text"
@@ -105,10 +108,6 @@ function HomePage() {
           </div>
         </div>
       </header>
-
-      <div className="ad-banner-wrapper">
-        <div id="adsterra-home-banner" className="ad-banner-host" />
-      </div>
 
       {loading && <p className="status-text">Loading posts from Supabase…</p>}
       {error && <p className="status-text error">{error}</p>}
