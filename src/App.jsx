@@ -41,10 +41,10 @@ function HomePage() {
     <div className="page-shell">
       <header className="hero-card">
         <div>
-          <p className="eyebrow">ScriptHub</p>
-          <h1>Find elite gaming scripts and resources in one place.</h1>
+          <p className="eyebrow">Premium gaming library</p>
+          <h1>Find the best Roblox scripts</h1>
           <p className="hero-copy">
-            Browse curated gameplay tools, automation scripts, and community guides with a polished experience built for modern gamers.
+            Discover polished gameplay tools, premium scripts, and curated resources in a sleek platform built for modern creators and players.
           </p>
           <div className="search-box">
             <input
