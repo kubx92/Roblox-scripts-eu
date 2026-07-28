@@ -7,10 +7,13 @@ function triggerAdsterraPopunder() {
     return;
   }
 
-  const script = document.createElement('script');
-  script.src = 'https://pl30577872.effectivecpmnetwork.com/57/9b/dc/579bdc8b3705d2c7ca6ec16eb4d60dae.js';
-  script.async = true;
-  document.body.appendChild(script);
+  const existingScript = document.querySelector('script[src*="effectivecpmnetwork.com"]');
+  if (!existingScript) {
+    const script = document.createElement('script');
+    script.src = 'https://pl30577872.effectivecpmnetwork.com/57/9b/dc/579bdc8b3705d2c7ca6ec16eb4d60dae.js';
+    script.async = true;
+    document.body.appendChild(script);
+  }
 }
 
 function HomePage() {
@@ -148,7 +151,7 @@ function PostPage() {
 
     window.setTimeout(() => {
       window.open(post.resource_link, '_blank', 'noopener,noreferrer');
-    }, 400);
+    }, 600);
   };
 
   const allStepsComplete = completedSteps.like && completedSteps.comment;
