@@ -143,7 +143,7 @@ function PostPage() {
           <h1>{post.title || 'Untitled post'}</h1>
           <p>{post.description || 'No description provided.'}</p>
           <a className="primary-button large" href={post.resource_link || '#'} onClick={handleResourceClick} target="_blank" rel="noreferrer">
-            Access Resource
+            Get Script
           </a>
         </div>
       </div>
