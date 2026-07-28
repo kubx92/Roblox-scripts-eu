@@ -67,9 +67,8 @@ function HomePage() {
             <div className="card-content">
               <h2>{post.title || 'Untitled post'}</h2>
               <p>{post.description || 'No description provided.'}</p>
-              <img className="preview-image" src={getCardImage(post)} alt={`${post.title || 'Post'} preview`} />
               <Link className="primary-button" to={`/post/${post.id}`}>
-                Open Post
+                Get Script
               </Link>
             </div>
           </article>
@@ -116,6 +115,15 @@ function PostPage() {
   const videoId = getYouTubeId(post.youtube_link);
   const embedUrl = `https://www.youtube.com/embed/${videoId}`;
 
+  const handleResourceClick = (event) => {
+    if (!post.resource_link) {
+      event.preventDefault();
+      return;
+    }
+
+    window.open(post.resource_link, '_blank', 'noopener,noreferrer');
+  };
+
   return (
     <div className="page-shell post-detail">
       <Link className="back-link" to="/">
@@ -134,7 +142,7 @@ function PostPage() {
           <p className="eyebrow">Featured Resource</p>
           <h1>{post.title || 'Untitled post'}</h1>
           <p>{post.description || 'No description provided.'}</p>
-          <a className="primary-button large" href={post.resource_link} target="_blank" rel="noreferrer">
+          <a className="primary-button large" href={post.resource_link || '#'} onClick={handleResourceClick} target="_blank" rel="noreferrer">
             Access Resource
           </a>
         </div>
