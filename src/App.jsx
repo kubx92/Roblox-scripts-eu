@@ -118,11 +118,14 @@ function PostPage() {
 
   const handleStepComplete = (step) => {
     setCompletedSteps((prev) => ({ ...prev, [step]: true }));
-    window.open(post.youtube_link, '_blank', 'noopener,noreferrer');
+
+    if (post?.youtube_link) {
+      window.open(post.youtube_link, '_blank', 'noopener,noreferrer');
+    }
   };
 
   const handleUnlockClick = () => {
-    if (!post.resource_link) {
+    if (!post?.resource_link) {
       return;
     }
 
