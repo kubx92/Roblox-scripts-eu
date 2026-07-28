@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Link, Navigate, Route, Routes, useParams } from 'react-router-dom';
+import { Link, Navigate, Route, Routes, useNavigate, useParams } from 'react-router-dom';
 import { supabase } from './lib/supabase';
 
 function triggerAdsterraPopunder() {
@@ -21,6 +21,7 @@ function HomePage() {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function loadPosts() {
@@ -50,6 +51,14 @@ function HomePage() {
       return title.includes(term) || description.includes(term);
     });
   }, [posts, search]);
+
+  const handleGetScriptClick = (event, postId) => {
+    event.preventDefault();
+    triggerAdsterraPopunder();
+    window.setTimeout(() => {
+      navigate(`/post/${postId}`);
+    }, 800);
+  };
 
   return (
     <div className="page-shell">
@@ -84,7 +93,7 @@ function HomePage() {
               <Link
                 className="primary-button"
                 to={`/post/${post.id}`}
-                onClick={() => triggerAdsterraPopunder()}
+                onClick={(event) => handleGetScriptClick(event, post.id)}
               >
                 Get Script
               </Link>
