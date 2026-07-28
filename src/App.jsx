@@ -67,9 +67,8 @@ function HomePage() {
             <div className="card-content">
               <h2>{post.title || 'Untitled post'}</h2>
               <p>{post.description || 'No description provided.'}</p>
-              <img className="preview-image" src={getCardImage(post)} alt={`${post.title || 'Post'} preview`} />
               <Link className="primary-button" to={`/post/${post.id}`}>
-                Open Post
+                Get Script
               </Link>
             </div>
           </article>
@@ -84,6 +83,7 @@ function PostPage() {
   const [post, setPost] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [completedSteps, setCompletedSteps] = useState({ like: false, comment: false });
 
   useEffect(() => {
     async function loadPost() {
@@ -116,6 +116,24 @@ function PostPage() {
   const videoId = getYouTubeId(post.youtube_link);
   const embedUrl = `https://www.youtube.com/embed/${videoId}`;
 
+  const handleStepComplete = (step) => {
+    setCompletedSteps((prev) => ({ ...prev, [step]: true }));
+
+    if (post?.youtube_link) {
+      window.open(post.youtube_link, '_blank', 'noopener,noreferrer');
+    }
+  };
+
+  const handleUnlockClick = () => {
+    if (!post?.resource_link) {
+      return;
+    }
+
+    window.open(post.resource_link, '_blank', 'noopener,noreferrer');
+  };
+
+  const allStepsComplete = completedSteps.like && completedSteps.comment;
+
   return (
     <div className="page-shell post-detail">
       <Link className="back-link" to="/">
@@ -134,9 +152,45 @@ function PostPage() {
           <p className="eyebrow">Featured Resource</p>
           <h1>{post.title || 'Untitled post'}</h1>
           <p>{post.description || 'No description provided.'}</p>
-          <a className="primary-button large" href={post.resource_link} target="_blank" rel="noreferrer">
-            Access Resource
-          </a>
+
+          <div>
+            <p style={{ margin: '0 0 0.5rem', fontWeight: 700 }}>Unlock Script</p>
+            <p style={{ margin: '0 0 0.8rem' }}>Complete both steps below to unlock the script.</p>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '0.75rem' }}>
+                <span>Step 1: Like the video</span>
+                <button
+                  className="primary-button"
+                  type="button"
+                  onClick={() => handleStepComplete('like')}
+                >
+                  {completedSteps.like ? 'Completed' : 'Like the video'}
+                </button>
+              </div>
+
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '0.75rem' }}>
+                <span>Step 2: Comment on the video</span>
+                <button
+                  className="primary-button"
+                  type="button"
+                  onClick={() => handleStepComplete('comment')}
+                >
+                  {completedSteps.comment ? 'Completed' : 'Comment on the video'}
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <button
+            className="primary-button large"
+            type="button"
+            onClick={handleUnlockClick}
+            disabled={!allStepsComplete}
+            style={{ opacity: allStepsComplete ? 1 : 0.6, cursor: allStepsComplete ? 'pointer' : 'not-allowed' }}
+          >
+            Unlock Script
+          </button>
         </div>
       </div>
     </div>
